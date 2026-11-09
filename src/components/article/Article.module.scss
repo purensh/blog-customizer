@@ -4,17 +4,24 @@
 	justify-content: center;
 	align-items: center;
 	row-gap: 24px;
-	max-width: var(--container-width, auto);
+	max-width: var(--article-width, var(--container-width, auto));
 	margin: 0 auto;
-	padding: 72px 0 144px;
+	padding: 90px 0 144px;
+	overflow: hidden;
 }
 
-.titleDescription {
+.article h1,
+.article div {
+	width: 100%;
+	max-width: var(--container-width, 1394px);
+}
+
+.article .titleDescription {
 	max-width: 550px;
 }
 
 .image {
-	width: 100%;
+	width: 100vw;
 	height: auto;
 	margin-top: 26px;
 }

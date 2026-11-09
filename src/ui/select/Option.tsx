@@ -13,12 +13,14 @@ import styles from './Select.module.scss';
 type OptionProps = {
   option: OptionType;
   onClick: (value: OptionType['value']) => void;
+  isSelected?: boolean;
 };
 
 export const Option = (props: OptionProps): React.JSX.Element => {
   const {
     option: { value, title, optionClassName, className },
     onClick,
+    isSelected = false,
   } = props;
   const optionRef = useRef<HTMLLIElement>(null);
 
@@ -43,6 +45,7 @@ export const Option = (props: OptionProps): React.JSX.Element => {
       value={value}
       onClick={handleClick(value)}
       tabIndex={0}
+      aria-selected={isSelected}
       data-testid={`select-option-${value}`}
       ref={optionRef}
     >

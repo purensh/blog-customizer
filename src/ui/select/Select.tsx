@@ -70,7 +70,6 @@ export const Select = (props: SelectProps): React.JSX.Element => {
             styles.placeholder,
             (styles as Record<string, string>)[optionClassName]
           )}
-          data-status={status}
           data-selected={!!selected?.value}
           onClick={handlePlaceHolderClick}
           role="button"
@@ -87,15 +86,14 @@ export const Select = (props: SelectProps): React.JSX.Element => {
         </div>
         {isOpen && (
           <ul className={styles.select} data-testid="selectDropdown">
-            {options
-              .filter((option) => selected?.value !== option.value)
-              .map((option) => (
-                <Option
-                  key={option.value}
-                  option={option}
-                  onClick={() => handleOptionClick(option)}
-                />
-              ))}
+            {options.map((option) => (
+              <Option
+                key={option.value}
+                option={option}
+                isSelected={option.value === selected?.value}
+                onClick={() => handleOptionClick(option)}
+              />
+            ))}
           </ul>
         )}
       </div>
