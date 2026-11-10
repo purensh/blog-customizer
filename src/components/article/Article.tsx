@@ -8,7 +8,7 @@ import styles from './Article.module.scss';
 export const Article = (): React.JSX.Element => {
   return (
     <article className={clsx(styles.article)}>
-      <Text as="h1" size={45} weight={800} uppercase align="center" dynamicLite>
+      <Text as="h1" size={45} weight={800} uppercase dynamicLite>
         Портрет Западной Швейцарии
       </Text>
       <div className={styles.titleDescription}>
@@ -17,7 +17,7 @@ export const Article = (): React.JSX.Element => {
         </Text>
       </div>
       <img className={styles.image} src={plane} alt="Картинка самолета" />
-      <Text dynamic size={18} fontStyle="italic" align="center">
+      <Text dynamic size={18} fontStyle="italic">
         Фото: Hans-Peter Gauster , &quot;Bombardier CSeries CS300 HB-JCA&quot; © 2017 CC
         BY-SA 2.0
       </Text>

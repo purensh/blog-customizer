@@ -14,31 +14,29 @@ import { RadioGroup } from 'src/ui/radio-group';
 import { Select } from 'src/ui/select';
 import { useOutsideClickClose } from 'src/ui/select/hooks/useOutsideClickClose';
 import { Separator } from 'src/ui/separator';
+import { Text } from 'src/ui/text';
 
 import type { ArticleStateType, OptionType } from 'src/constants/articleProps';
 
 import styles from './ArticleParamsForm.module.scss';
 
 type ArticleParamsFormProps = {
-  isOpen: boolean;
-  onOpenOrClosePanel: (isOpen: boolean) => void;
   articleState: ArticleStateType;
   onApplySettings: (state: ArticleStateType) => void;
 };
 
 export const ArticleParamsForm = ({
-  isOpen,
-  onOpenOrClosePanel,
   articleState,
   onApplySettings,
 }: ArticleParamsFormProps): React.JSX.Element => {
   const [formState, setFormState] = useState<ArticleStateType>(articleState);
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useOutsideClickClose({
-    isOpen,
+    isOpen: isFormOpen,
     rootRef,
-    onChange: onOpenOrClosePanel,
+    onChange: setIsFormOpen,
   });
 
   const handleFieldChange =
@@ -47,12 +45,12 @@ export const ArticleParamsForm = ({
       setFormState((prevState) => ({ ...prevState, [field]: option }));
     };
 
-  const buttonSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     onApplySettings(formState);
   };
 
-  const buttonReset = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleFormReset = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     setFormState(defaultArticleState);
     onApplySettings(defaultArticleState);
@@ -60,10 +58,20 @@ export const ArticleParamsForm = ({
 
   return (
     <div ref={rootRef}>
-      <ArrowButton isOpen={isOpen} onClick={() => onOpenOrClosePanel(!isOpen)} />
-      <aside className={clsx(styles.container, { [styles.container_open]: isOpen })}>
-        <form className={styles.form} onSubmit={buttonSubmit} onReset={buttonReset}>
-          <h1 className={styles.title}>Задайте параметры</h1>
+      <ArrowButton isOpen={isFormOpen} onClick={() => setIsFormOpen(!isFormOpen)} />
+      <aside
+        className={clsx(styles.container, {
+          [styles.container_open]: isFormOpen,
+        })}
+      >
+        <form
+          className={styles.form}
+          onSubmit={handleFormSubmit}
+          onReset={handleFormReset}
+        >
+          <Text as="h2" size={31} weight={800} uppercase>
+            Задайте параметры
+          </Text>
           <div className={styles.fields}>
             <Select
               title="Шрифт"
